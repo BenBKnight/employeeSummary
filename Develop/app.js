@@ -13,14 +13,17 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+const addMoreQuestion = [{
+    type: "confirm",
+    name: "stop",
+    message: "Do you want to add more?"
+}]
 const roleQuestion = [{
     type: "list",
     name: "role",
     message: "Who would you like to add to the team?",
     choices: ["Manager", "Engineer", "Intern"]
 }];
-
-
 const internQuestions = [{
     type: "input",
     name: "name",
@@ -38,24 +41,23 @@ const internQuestions = [{
     name: "school",
     message: "What is the intern's school?"
 }];
-const managerQuestions = [
-    {
-        type: "input",
-        name: "name",
-        message: "Name?"
-    }, {
-        type: "input",
-        name: "id",
-        message: "Employee ID?"
-    }, {
-        type: "input",
-        name: "email",
-        message: "Employee's Email"
-    }, {
-        type: "input",
-        name: "officeNumber",
-        message: "What is the manager's office number?"
-    }];
+const managerQuestions = [{
+    type: "input",
+    name: "name",
+    message: "Name?"
+}, {
+    type: "input",
+    name: "id",
+    message: "Employee ID?"
+}, {
+    type: "input",
+    name: "email",
+    message: "Employee's Email"
+}, {
+    type: "input",
+    name: "officeNumber",
+    message: "What is the manager's office number?"
+}];
 const engineerQuestions = [{
     type: "input",
     name: "name",
@@ -73,38 +75,45 @@ const engineerQuestions = [{
     name: "github",
     message: "What is their GitHub Username?"
 }]
-
-let allEmployees = [];
-
-
+// Variable to store employees
+let employees = [];
+// Ask user if they want to add more
 const startInput = function () {
+    inquirer.prompt(addMoreQuestion).then(answers => {
+        if (answers.stop === true) {
+            startEmployees();
+        } else {
+            render(employees);
+            console.log("hit")
+        }
+    })
+};
+// Adding information about employees
+const startEmployees = function () {
     inquirer.prompt(roleQuestion).then(answers => {
         if (answers.role === "Manager") {
-
             inquirer.prompt(managerQuestions).then(answers => {
                 const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-                allEmployees.push(manager)
+                employees.push(manager)
                 startInput();
-                console.log(allEmployees)
+                console.log(employees)
             });
         } else if (answers.role === "Engineer") {
             inquirer.prompt(engineerQuestions).then(answers => {
                 const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
-                allEmployees.push(engineer)
+                employees.push(engineer)
                 startInput();
-                console.log(allEmployees)
+                console.log(employees)
             });
         } else {
             inquirer.prompt(internQuestions).then(answers => {
                 const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
-                allEmployees.push(intern)
+                employees.push(intern)
                 startInput();
-                console.log(allEmployees)
-
+                console.log(employees)
             });
         };
-    }
-    );
+    });
 }
 
 
