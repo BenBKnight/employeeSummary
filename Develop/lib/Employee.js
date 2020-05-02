@@ -1,21 +1,20 @@
 // TODO: Write code to define and export the Employee class
-const inquirer = require("inquirer")
-
-
-function Employee(name, id, email) {
+class Employee{
+    constructor(name, id, email) {
     this.name = name;
     this.id = id;
     this.email = email;
-    this.getName = function(){
-        return name;
+}
+    getName (){
+        return this.name;
     };
-    this.getId = function(){
-        return id;
+    getId (){
+        return this.id;
     };
-    this.getEmail = function(){
-        return email;
+    getEmail (){
+        return this.email;
     };
-    this.getRole = function(){
+    getRole (){
         return "Employee";
     };
 };
