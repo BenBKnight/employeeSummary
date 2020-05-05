@@ -96,21 +96,18 @@ const startEmployees = function () {
                 const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
                 employees.push(manager)
                 startInput();
-                console.log(employees)
             });
         } else if (answers.role === "Engineer") {
             inquirer.prompt(engineerQuestions).then(answers => {
                 const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
                 employees.push(engineer)
                 startInput();
-                console.log(employees)
             });
         } else {
             inquirer.prompt(internQuestions).then(answers => {
                 const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
                 employees.push(intern)
                 startInput();
-                console.log(employees)
             });
         };
     });
