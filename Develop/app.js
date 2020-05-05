@@ -83,8 +83,8 @@ const startInput = function () {
         if (answers.stop === true) {
             startEmployees();
         } else {
-            render(employees);
-            console.log("hit")
+            const finalHtml = render(employees);
+            fs.writeFileSync(outputPath, finalHtml)
         }
     })
 };
